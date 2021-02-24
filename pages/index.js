@@ -1,8 +1,10 @@
 import Head from 'next/head';
 import styles from '../styles/Home.solution.module.css';
-import { initiateCheckout } from '../lib/paymentHandler';
+import { useCart } from '../hooks/useCart';
 import products from '../products.json';
+
 export default function Home() {
+  const { totalItems, subtotal, handleCheckout, addToCart } = useCart();
   return (
     <div className={styles.container}>
       <Head>
@@ -28,17 +30,10 @@ export default function Home() {
                   <button
                     className={styles.button}
                     onClick={() => {
-                      initiateCheckout({
-                        lineItems: [
-                          {
-                            price: id,
-                            quantity: 1,
-                          },
-                        ],
-                      });
+                      addToCart({ id });
                     }}
                   >
-                    Buy now
+                    Add to cart
                   </button>
                 </p>
               </li>
